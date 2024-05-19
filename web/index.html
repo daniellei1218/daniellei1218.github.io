@@ -3,18 +3,65 @@
 <head>
 <meta charset="utf-8"><title></title>
 <script lanuage='javascript'>
+
 var varAll = [
-//code price pb
-['600036',33.1,0.99,0.15,0.35,0.9],
-['600036',33.1,0.99,0.15,0.35,0.9]
+//code    price pb    roe   dpr   dr
+['600036',36.84, 0.96, 0.15, 0.35, 0.9],
+['600036',36.84, 0.96, 0.15, 0.35, 0.9]
 ]
+
+function round(num, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(num * multiplier) / multiplier;
+}
+
+function get_code_report(item, price)
+{
+	view = ''
+	code = item[0]
+	price0 = item[1]
+	pb = item[2]*price/price0
+	roe = item[3]
+	dpr = item[4]
+	dr = item[5]
+	pe = pb/roe
+	N = (25.+(0.5-dr)*10)
+	pre = (N - 1./roe)*roe
+	//ROE*(1-DPR/100) + ROE*DPR/100*(1+ROE/100*(1-DPR/100))/PB0
+	irr = roe*(1-dpr)+roe*dpr*(1+roe*(1-dpr))/pre
+	pe0 = N-1./irr
+	pb0 = pe0*roe
+	view += ("\n用Np法则对 " + code + " 估值\n")
+	view += ("\n分红率：\t\t" + round(100*dpr,2) + "%\n")
+	view += ("市盈率：\t\t" + round(pe,2) + "\n")
+	view += ("市净率：\t\t" + round(pb,2) + "\n")
+	view += ("净资产收益率：\t" + round(roe*100,2) + "%\n")
+	view += ("内含收益率：\t" + round(irr*100,2) + "%\n")
+	view += ("内含收益倍数：\t" + round(1/irr,2) + "\n")
+	view += ("目标市净率：\t" + round(pb0,2) + "\n")
+	view += ("目标市盈率：\t" + round(pe0,2) + "\n")
+
+	return view
+}
+
+function get_code_info(code, price)
+{
+	for (var i=0,len=varAll.length; i<len; i++)
+	{ 
+		if (code == varAll[i][0])
+		{
+			return get_code_report(varAll[i], price)
+		}
+	}
+}
+
 function eval()
 {
 ///////////////////////
-	var code = document.getElementById('code').value;
-	var price = document.getElementById('price').value;
-	document.getElementById('info').value = 'test';
-	var info = get_code_info(code);
+	var code = document.getElementById('code').value
+	var price = document.getElementById('price').value
+	var info = get_code_info(code, price)
+	document.getElementById('text_info').value = info
 }
 </script>
 </head>
@@ -23,17 +70,14 @@ function eval()
     <h3>
     <form>
         <label for="code">股票代码</label>
-        <input type="text" id="code" name="code" required>
-
+        <input type="text" id="code" name="code" required value = "600036">
         <br>
-
         <label for="price">股票价格</label>
-        <input type="text" id="price" name="price" required>
-
+        <input type="text" id="price" name="price" required value = "36.84">
         <br>
-        <input type="button" value="开始估值" onclick='eval()'>
+        <input type="button" value="        开始估值        " onclick='eval()'>
         <br>
-		<textarea id="info" rows="25" cols="50">
+		<textarea id="text_info" rows="16" cols="28">
 		</textarea>
 		<br>
     </form>
