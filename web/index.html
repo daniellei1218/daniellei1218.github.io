@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"><title></title>
+<script lanuage='javascript'>
+var varAll = [
+//code price pb
+['600036',33.1,0.99,0.15,0.35,0.9],
+['600036',33.1,0.99,0.15,0.35,0.9]
+]
+function eval()
+{
+////
+	var code = document.getElementById('code').value;
+	var price = document.getElementById('price').value;
+	document.getElementById('info').value = 'test';
+	var info = get_code_info(code);
+}
+</script>
+</head>
+<body>
+
+    <h3>
+    <form>
+        <label for="code">股票代码</label>
+        <input type="text" id="code" name="code" required>
+
+        <br>
+
+        <label for="price">股票价格</label>
+        <input type="text" id="price" name="price" required>
+
+        <br>
+        <input type="button" value="开始估值" onclick='eval()'>
+        <br>
+		<textarea id="info" rows="25" cols="50">
+		</textarea>
+		<br>
+    </form>
+	</h3>
+</body>
+</html>
