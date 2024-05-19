@@ -451,23 +451,36 @@ function eval()
 	document.getElementById('text_info').value = info
 }
 </script>
+
+<style>
+  body, html, form, input, textarea {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .full-width {
+    width: 100%;
+    background-color: #f0f0f0; /* 为了看到效果，设置背景色 */
+  }
+</style>
 </head>
 <body>
 
-    <h3>
+    <div class="full-width">
     <form>
         <label for="code">股票代码</label>
-        <input type="text" id="code" name="code" required value = "600036">
+        <input type="text" id="code" name="code" required value = "600036" >
         <br>
         <label for="price">股票价格</label>
         <input type="text" id="price" name="price" required value = "36.84">
         <br>
         <input type="button" value="        开始估值        " onclick='eval()'>
         <br>
-		<textarea id="text_info" rows="16" cols="28">
+		<textarea id="text_info" rows="30">
 		</textarea>
 		<br>
     </form>
-	</h3>
+	</div>
 </body>
 </html>
