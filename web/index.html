@@ -42,21 +42,31 @@
         margin-bottom: 10px;
     }
 </style>
+<link rel="stylesheet" href="styles.css">  
 </head>
-<body>
-
+<body onload="init()">
+    <header id="navbar">  
+        <nav>  
+            <ul>  
+                <li><a href="#">指数</a></li>  
+                <li><a href="#">股票</a></li>  
+                <li><a href="#">REITS</a></li>  
+                <li><a href="#">文档</a></li>  
+            </ul>  
+        </nav>  
+    </header>
 <div class="container">
     <div class="box">
-    <form>
+    <form method='get'>
         <label for="code">股票代码</label>
-        <input type="text" id="code" name="code" required value = "002271" >
+        <input type="text" id="code" name="code" required  ><input type="submit" value="..." >
         <br>
         <label for="price">股票价格</label>
-        <input type="text" id="price" name="price" required value = "18">
+        <input type="text" id="price" name="price" >
         <br>
         <input type="button" value="        开始估值        " onclick='eval()'>
         <br>
-		<textarea id="text_info" rows="20" cols='30' readonly style="overflowhidden">
+		<textarea id="text_info" rows="20" cols="30" style="overflow:hidden; resize:none;" readonly >
 		</textarea>
 		<br>
     </form>
@@ -64,12 +74,12 @@
     <div class="box">
     <form>
         <label for="data">修改参数<br></label>
-        <textarea id="data" name="data" required rows="3" cols='30' style="overflowhidden">
+        <textarea id="data" name="data" required rows="3" cols='30' style="overflow:hidden; resize:none;">
 		</textarea>
         <br>
         <input type="button" value="        重新估值        " onclick='re_eval()'>
         <br>
-		<textarea id="re_text_info" rows="20" cols='30' readonly style="overflowhidden">
+		<textarea id="re_text_info" rows="20" cols="30"  style="overflow:hidden; resize:none;" readonly >
 		</textarea>
 		<br>
     </form>
@@ -81,6 +91,27 @@
 
 
 <script lanuage='javascript'>
+
+function getParameterByName(name)
+{
+	var match = RegExp('[?&]'+ name + '=([^&]*)').exec(window.location.search)
+	return match && decodeURIComponent(match[1].replace(/\+/g,''));
+}
+
+function init()
+{
+	var code = getParameterByName('code')
+	for (var i=0,len=varAll.length; i<len; i++)
+	{ 
+		if (code == varAll[i][0])
+		{
+			document.getElementById('price').value = varAll[i][1]
+			document.getElementById('code').value = code
+			return
+		}
+	}
+	document.getElementById('price').value = 10.1
+}
 
 function get_code_report(item, price)
 {
