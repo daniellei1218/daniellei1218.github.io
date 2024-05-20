@@ -56,7 +56,7 @@
         <br>
         <input type="button" value="        开始估值        " onclick='eval()'>
         <br>
-		<textarea id="text_info" rows="30" cols='30' readonly>
+		<textarea id="text_info" rows="20" cols='30' readonly>
 		</textarea>
 		<br>
     </form>
@@ -69,7 +69,7 @@
         <br>
         <input type="button" value="        重新估值        " onclick='re_eval()'>
         <br>
-		<textarea id="re_text_info" rows="30" cols='30' readonly>
+		<textarea id="re_text_info" rows="20" cols='30' readonly>
 		</textarea>
 		<br>
     </form>
@@ -105,7 +105,7 @@ function get_code_report(item, price)
 	pe0 = N-1./irr
 	pb0 = pe0*roe
 	view += ("\n用Np法则对" + name + "估值\n")
-	view += ("\n分红率DPR\t\t" + round(100*dpr,2) + "%\n")
+	view += ("\n分红率DPR\t\t" + round(100*dpr,1) + "%\n")
 	view += ("负债率DR\t\t" + round(100*dr,2) + "%\n")
 	view += ("市盈率PE\t\t" + round(pe,2) + "\n")
 	view += ("市净率PB\t\t" + round(pb,2) + "\n")
@@ -137,6 +137,24 @@ function get_code_info(code, price)
 	}
 }
 
+function get_code_info_re(code, price, data)
+{
+	for (var i=0,len=varAll.length; i<len; i++)
+	{ 
+		if (code == varAll[i][0])
+		{
+			var_item = varAll[i]
+			d = JSON.parse(data)
+			var_item[2] = d["PB"]
+			var_item[3] = d["ROE"]/100.
+			var_item[4] = d["DPR"]/100.
+			var_item[5] = d["DR"]/100.
+			
+			return get_code_report(var_item, price)
+		}
+	}
+}
+
 function eval()
 {
 ///////////////////////
@@ -145,6 +163,16 @@ function eval()
 	var info = get_code_info(code, price)
 	document.getElementById('text_info').value = info[0]
 	document.getElementById('data').value = info[1]
+}
+
+function re_eval()
+{
+///////////////////////
+	var code = document.getElementById('code').value
+	var price = document.getElementById('price').value
+	var data = document.getElementById('data').value
+	var info = get_code_info_re(code, price, data)
+	document.getElementById('re_text_info').value = info[0]
 }
 
 function round(num, precision) {
