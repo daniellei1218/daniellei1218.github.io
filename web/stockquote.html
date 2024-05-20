@@ -81,13 +81,19 @@ function box_html(item)
 	return html
 }
 
-
 function init()
 {
 	html = ''
-	for (var i=0,len=varAll.length; i<len; i++)
+	varAllSort = varAll.slice().sort(function(a, b)
+	{
+		va = a[2]/((24-1./a[3])/(1./a[3]))
+		vb = b[2]/((24-1./b[3])/(1./b[3]))
+		return va-vb;   
+	});  
+	for (var i=0,len=varAllSort.length; i<len; i++)
 	{ 	
-		var item = get_code_report(varAll[i],varAll[i][1])
+		var item = get_code_report(varAllSort[i],varAllSort[i][1])
+		item[0] = '             ~'+(i+1)+'~\n'+item[0]
 		html += box_html(item)
 	}
 	document.getElementById('ctn').innerHTML = html
