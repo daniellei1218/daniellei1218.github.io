@@ -56,20 +56,20 @@
         <br>
         <input type="button" value="        开始估值        " onclick='eval()'>
         <br>
-		<textarea id="text_info" rows="20" cols='30' readonly>
+		<textarea id="text_info" rows="20" cols='30' readonly style="overflowhidden">
 		</textarea>
 		<br>
     </form>
     </div>
     <div class="box">
     <form>
-        <h4>修改参数</h4>
-        <textarea id="data" name="data" required rows="2" cols='30'>
+        <label for="data">修改参数<br></label>
+        <textarea id="data" name="data" required rows="3" cols='30' style="overflowhidden">
 		</textarea>
         <br>
         <input type="button" value="        重新估值        " onclick='re_eval()'>
         <br>
-		<textarea id="re_text_info" rows="20" cols='30' readonly>
+		<textarea id="re_text_info" rows="20" cols='30' readonly style="overflowhidden">
 		</textarea>
 		<br>
     </form>
