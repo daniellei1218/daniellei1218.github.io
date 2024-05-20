@@ -43,6 +43,7 @@
     }
 </style>
 <link rel="stylesheet" href="styles.css">  
+<script src="js/db.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body onload="init()">
     <header id="navbar">  
@@ -85,11 +86,6 @@
     </form>
     </div>
 </div>
-
-</body>
-</html>
-
-
 <script lanuage='javascript'>
 
 function getParameterByName(name)
@@ -211,7 +207,7 @@ function round(num, precision) {
   return Math.round(num * multiplier) / multiplier;
 }
 
-var varAll = [
+var varAll_ = [
 //code    price pb    roe   dpr   dr
 ['002271',17.85,1.58385093168,0.101005972027,0.527084544715,0.439,'东方雨虹'],
 ['002572',21.54,2.95879120879,0.138974473087,0.98840192959,0.4999,'索菲亚'],
@@ -604,3 +600,6 @@ var varAll = [
 ['300136',19.3,2.65474552957,0.0793384640452,0.173373134328,0.4491,'信维通信']
 ]
 </script>
+
+</body>
+</html>
