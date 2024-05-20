@@ -1,0 +1,27 @@
+/* styles.css */  
+  
+#navbar {  
+    position: sticky; /* 使用sticky定位使导航在滚动时固定在顶部 */  
+    top: 0; /* 导航距离顶部的距离 */  
+    width: 100%; /* 导航的宽度 */  
+    background-color: #333; /* 导航的背景色 */  
+    color: #fff; /* 导航的文字颜色 */  
+    z-index: 999; /* 确保导航在其他内容之上 */  
+}  
+  
+#navbar nav ul {  
+    list-style-type: none; /* 移除列表样式 */  
+    padding: 0; /* 移除内边距 */  
+    margin: 0; /* 移除外边距 */  
+    display: flex; /* 使用Flexbox来水平排列链接 */  
+    justify-content: space-around; /* 链接之间的空间平均分布 */  
+}  
+  
+#navbar nav ul li a {  
+    text-decoration: none; /* 移除下划线 */  
+    color: #fff; /* 链接文字颜色 */  
+    display: block; /* 将链接转换为块级元素以填充整个列表项 */  
+    padding: 10px 0; /* 上下内边距 */  
+}  
+  
+/* 其他样式... */
