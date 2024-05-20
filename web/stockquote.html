@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>股票估值浏览</title>
+<style>
+    /* CSS Reset（可选） */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 通用样式 */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    /* 响应式样式 */
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* 当屏幕宽度大于600px时 */
+    @media (min-width: 600px) {
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .box {
+            width: 45%;
+        }
+    }
+
+    /* 盒子样式 */
+    .box {
+        background-color: #e0e0e0;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<link rel="stylesheet" href="styles.css"> 
+<script src="js/db.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body onload="init()">
+    <header id="navbar">  
+        <nav>  
+            <ul>  
+                <li><a href="#">指数</a></li>  
+                <li><a href="stockquote.html">股票</a></li>  
+                <li><a href="#">REITS</a></li>  
+                <li><a href="#">文档</a></li>  
+            </ul>  
+        </nav>  
+    </header>
+<div class="container" id="ctn" >
+    <div class="box">
+    </div>
+</div>
+
+</body>
+</html>
+
+
+<script lanuage='javascript'>
+
+function getParameterByName(name)
+{
+	var match = RegExp('[?&]'+ name + '=([^&]*)').exec(window.location.search)
+	return match && decodeURIComponent(match[1].replace(/\+/g,''));
+}
+
+function box_html(item)
+{
+	html = '<div class="box"><textarea id="text_info" rows="20" cols="30" style="overflow:hidden; resize:none;" readonly >'
+	html +='\n'+item[0]
+	html +='</textarea></div>'
+	return html
+}
+		
+
+function init()
+{
+	html = ''
+	for (var i=0,len=varAll.length; i<len; i++)
+	{ 	
+		var item = get_code_report(varAll[i],varAll[i][1])
+		html += box_html(item)
+	}
+	document.getElementById('ctn').innerHTML = html
+}
+
+function get_code_report(item, price)
+{
+	const dict = {};
+	view = ''
+	code = item[0]
+	price0 = item[1]
+	pb = item[2]*price/price0
+	roe = item[3]
+	if(roe < 0.066667)
+		roe = 0.066667
+	dpr = item[4]
+	vdpr = dpr>0.7?0.7:dpr
+	vdpr = vdpr<0.3?0.3:vdpr
+	dr = item[5]
+	name = item[6]
+	pe = pb/roe
+	N = (25.+(0.5-dr)*10)
+	pre = (N - 1./roe)*roe
+	//ROE*(1-DPR/100) + ROE*DPR/100*(1+ROE/100*(1-DPR/100))/PB0
+	irr = roe*(1-vdpr)+roe*vdpr*(1+roe*(1-vdpr))/pre
+	pe0 = N-1./irr
+	pb0 = pe0*roe
+	view += ("\n用Np法则对" + name + "估值\n")
+	view += ("\n分红率DPR   \t" + round(100*dpr,1) + "%\n")
+	view += ("负债率DR    \t" + round(100*dr,2) + "%\n")
+	view += ("市盈率PE    \t" + round(pe,2) + "\n")
+	view += ("市净率PB    \t" + round(pb,2) + "\n")
+	dict['PB'] = round(pb,3)
+	view += ("净资产收益率ROE\t" + round(roe*100,2) + "%\n")
+	dict['ROE'] = round(roe*100,3)
+	dict['DPR'] = round(dpr*100,3)
+	dict['DR'] = round(dr*100,3)
+	view += ("内含收益率IRR\t" + round(irr*100,2) + "%\n")
+	view += ("盈利收益率  \t" + round(1./pe*100,2) + "%\n")
+	view += ("综合收益倍数N\t" + round(N,1) + "\n")
+	view += ("目标综合收益率\t" + round(2./N*100,2) + "%\n")
+	view += ("目标市净率PB0\t" + round(pb0,2) + " *\n")
+	view += ("目标市盈率PE0\t" + round(pe0,2) + "\n")
+	view += ("当前价格折扣率\t" + round(pb/pb0,2) + "\n")
+	view += ("推荐仓位    \t" + round(0.72/(pb/pb0)*100,2) + "%\n")
+
+	return [view,JSON.stringify(dict)]
+}
+
+function get_code_info(code, price)
+{
+	for (var i=0,len=varAll.length; i<len; i++)
+	{ 
+		if (code == varAll[i][0])
+		{
+			return get_code_report(varAll[i], price)
+		}
+	}
+}
+
+function get_code_info_re(code, price, data)
+{
+	for (var i=0,len=varAll.length; i<len; i++)
+	{ 
+		if (code == varAll[i][0])
+		{
+			var_item = varAll[i]
+			d = JSON.parse(data)
+			var_item[2] = d["PB"]
+			var_item[3] = d["ROE"]/100.
+			var_item[4] = d["DPR"]/100.
+			var_item[5] = d["DR"]/100.
+			
+			return get_code_report(var_item, price)
+		}
+	}
+}
+/*
+function eval()
+{
+///////////////////////
+	var code = document.getElementById('code').value
+	var price = document.getElementById('price').value
+	var info = get_code_info(code, price)
+	document.getElementById('text_info').value = info[0]
+	document.getElementById('data').value = info[1]
+}
+
+function re_eval()
+{
+///////////////////////
+	var code = document.getElementById('code').value
+	var price = document.getElementById('price').value
+	var data = document.getElementById('data').value
+	var info = get_code_info_re(code, price, data)
+	document.getElementById('re_text_info').value = info[0]
+}*/
+
+function round(num, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(num * multiplier) / multiplier;
+}
+</script>
