@@ -74,11 +74,13 @@ function getParameterByName(name)
 	return match && decodeURIComponent(match[1].replace(/\+/g,''));
 }
 
-function box_html(item)
+function box_html(item, code)
 {
 	html = '<div class="box"><textarea  rows="20" cols="30" style="overflow:hidden; resize:none;" readonly >'
 	html +=item[0]
-	html +='</textarea></div>'
+	html +='</textarea>'
+	html +="<br><input type='button' value='                    去估值                    ' onclick='window.location.href = \"index.html?code="+code+"\"'></div>"
+	
 	return html
 }
 
@@ -95,7 +97,7 @@ function init()
 	{ 	
 		var item = get_code_report(varAllSort[i],varAllSort[i][1])
 		item[0] = '            - '+(i+1)+' -\n'+item[0]
-		html += box_html(item)
+		html += box_html(item, varAllSort[i][0])
 	}
 	document.getElementById('ctn').innerHTML = html
 }
