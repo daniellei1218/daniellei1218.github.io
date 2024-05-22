@@ -105,11 +105,11 @@ function get_code_report(item, price)
 	price = dividend/(0.04*1.414)
 	name = item[3]
 	irr = (dividend/price)+0.03
-	view += ("\n\n" + name + " ( 股息法则估值)\n\n")
-	view += ("每股股息\t" + round(dividend,4) + "\n")
+	view += ("\n\n " + name + " \n  (股息法则估值)\n\n")
+	view += ("每股分红股息\t" + round(dividend,4) + "\n")
 	view += ("内含收益率IRR\t" + round(irr*100,2) + "%\n")
 	view += ("当前价格折扣率\t" + round(price0/price,2) + "\n")
-	view += ("推荐仓位    \t" + round(0.72/(price0/price)*100,2) + "%\n")
+	view += ("推荐配置仓位\t" + round(0.72/(price0/price)*100,2) + "%\n")
 
 	return [view,JSON.stringify(dict)]
 }
