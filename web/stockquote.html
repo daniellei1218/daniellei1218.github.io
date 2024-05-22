@@ -94,7 +94,7 @@ function init()
 	for (var i=0,len=varAllSort.length; i<len; i++)
 	{ 	
 		var item = get_code_report(varAllSort[i],varAllSort[i][1])
-		item[0] = '             ~'+(i+1)+'~\n'+item[0]
+		item[0] = '            - '+(i+1)+' -\n'+item[0]
 		html += box_html(item)
 	}
 	document.getElementById('ctn').innerHTML = html
@@ -122,7 +122,7 @@ function get_code_report(item, price)
 	irr = roe*(1-vdpr)+roe*vdpr*(1+roe*(1-vdpr))/pre
 	pe0 = N-1./irr
 	pb0 = pe0*roe
-	view += ("\n用Np法则对" + name + "估值\n")
+	view += ("\n " + name + " (Np法则估值)\n")
 	view += ("\n分红率DPR   \t" + round(100*dpr,1) + "%\n")
 	view += ("负债率DR    \t" + round(100*dr,2) + "%\n")
 	view += ("市盈率PE    \t" + round(pe,2) + "\n")

@@ -21,6 +21,7 @@
     .container {
         width: 100%;
         padding: 10px;
+		flex-wrap: wrap;
     }
 
     /* 当屏幕宽度大于600px时 */
@@ -88,7 +89,7 @@ function init()
 	for (var i=0,len=varAllSort.length; i<len; i++)
 	{ 	
 		var item = get_code_report(varAllSort[i],varAllSort[i][1])
-		item[0] = '             ~'+(i+1)+'~\n'+item[0]
+		item[0] = '            - '+(i+1)+' -\n'+item[0]
 		html += box_html(item)
 	}
 	document.getElementById('ctn').innerHTML = html
@@ -104,7 +105,7 @@ function get_code_report(item, price)
 	price = dividend/(0.04*1.414)
 	name = item[3]
 	irr = (dividend/price)+0.03
-	view += ("\n用4倍根号2法则对\n" + name + "估值\n\n")
+	view += ("\n\n" + name + " ( 股息法则估值)\n\n")
 	view += ("每股股息\t" + round(dividend,4) + "\n")
 	view += ("内含收益率IRR\t" + round(irr*100,2) + "%\n")
 	view += ("当前价格折扣率\t" + round(price0/price,2) + "\n")
