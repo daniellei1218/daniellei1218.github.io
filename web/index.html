@@ -168,20 +168,21 @@ function get_code_info(code, price)
 }
 
 //执行重新评估
-function get_code_info_re(code, price, data)
+function get_code_info_re(code, data)
 {
 	for (var i=0,len=varAll.length; i<len; i++)
 	{ 
 		if (code == varAll[i][0])
 		{
-			var_item = varAll[i]
+			var_item = varAll[i].slice()
 			d = JSON.parse(data)
+			var_item[1] = var_item[1]*d["PB"]/var_item[2]
 			var_item[2] = d["PB"]
 			var_item[3] = d["ROE"]/100.
 			var_item[4] = d["DPR"]/100.
 			var_item[5] = d["DR"]/100.
 			
-			return get_code_report(var_item, price)
+			return get_code_report(var_item, var_item[1])
 		}
 	}
 }
@@ -200,9 +201,8 @@ function eval()
 function re_eval()
 {
 	var code = document.getElementById('code').value
-	var price = document.getElementById('price').value
 	var data = document.getElementById('data').value
-	var info = get_code_info_re(code, price, data)
+	var info = get_code_info_re(code, data)
 	document.getElementById('re_text_info').value = info[0]
 }
 
