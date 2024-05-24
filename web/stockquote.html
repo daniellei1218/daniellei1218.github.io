@@ -120,10 +120,10 @@ function get_code_report(item, price)
 	pe = pb/roe
 	N = (25.+(0.5-dr)*10)
 	pre = (N - 1./roe)*roe
-	//ROE*(1-DPR/100) + ROE*DPR/100*(1+ROE/100*(1-DPR/100))/PB0
 	irr = roe*(1-vdpr)+roe*vdpr*(1+roe*(1-vdpr))/pre
 	pe0 = N-1./irr
 	pb0 = pe0*roe
+	irr = roe*(1-vdpr)+roe*vdpr*(1+roe*(1-vdpr))/pb0
 	view += ("\n " + name + " (Np法则估值)\n")
 	view += ("\n分红率DPR   \t" + round(100*dpr,1) + "%\n")
 	view += ("负债率DR    \t" + round(100*dr,2) + "%\n")
