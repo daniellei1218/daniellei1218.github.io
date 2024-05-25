@@ -1,3 +1,52 @@
+
+//获得参数
+function getParameterByName(name)
+{
+	var match = RegExp('[?&]'+ name + '=([^&]*)').exec(window.location.search)
+	return match && decodeURIComponent(match[1].replace(/\+/g,''));
+}
+
+function round(num, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(num * multiplier) / multiplier;
+}
+
+function evalNP(roe, dpr, dr) {  
+	let n = 25 + 10 * (0.5 - dr);  
+	let pre_pb = (n - 1 / roe) * roe; 
+	let irr = roe * (1 - dpr) + roe * dpr * (1 + roe * (1 - dpr)) / pre_pb;   
+	let pe = n - 1 / irr; 
+	let pb = pe * roe;  
+	irr = roe * (1 - dpr) + roe * dpr * (1 + roe * (1 - dpr)) / pb
+	return [pb, irr]; // 返回pb和irr的值  
+}
+
+function evalNE(roe, dpr, dr) {  
+    // 计算n  
+    var n = 25 + 10 * (0.5 - dr);  
+  
+    // 定义系数a, b, c  
+    var a = n;  
+    var b = roe * Math.pow(dpr, 2) + (n * roe - roe - 1) * dpr - n * roe - 1;  
+    var c = roe * (1 - dpr);  
+  
+    // 计算irr  
+    // 注意JavaScript中Math.sqrt用于平方根，并且使用Math.pow进行指数运算  
+    var discriminant = Math.pow(b, 2) - 4 * a * c;  
+    // 检查判别式是否大于0，否则不能计算平方根  
+    if (discriminant < 0) {  
+        throw new Error("The discriminant is less than 0, no real solution for irr.");  
+    }  
+    var irr = (-b + Math.sqrt(discriminant)) / (2 * a);  
+  
+    // 计算pe和pb  
+    var pe = n - 1 / irr;  
+    var pb = pe * roe;  
+  
+    // 返回pb和irr  
+    return [pb, irr];  
+} 
+
 var varReits = [
 ['180101',1.953,0.0815,'博时蛇口产园REIT'],
 ['508000',2.551,0.0786+0.0290,'华安张江产业园REIT'],
