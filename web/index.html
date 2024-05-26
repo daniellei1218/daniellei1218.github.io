@@ -129,7 +129,7 @@ function get_code_report(item, price)
 	v = evalNE(roe,vdpr,dr)
 	irr = v[1]
 	pb0 = v[0]
-	pe0 = pe0*roe
+	pe0 = pb0/roe
 	view += ("\n " + name + " (Ne法则估值)\n")
 	view += ("\n分红率DPR   \t" + round(100*dpr,1) + "%\n")
 	view += ("负债率DR    \t" + round(100*dr,2) + "%\n")
