@@ -89,9 +89,17 @@ function init()
 	html = ''
 	varAllSort = varAll.slice().sort(function(a, b)
 	{
-		va = a[2]/((24-1./a[3])/(1./a[3]))
-		vb = b[2]/((24-1./b[3])/(1./b[3]))
-		return va-vb;   
+		let pre_pb_a = (24-1./a[3])/(1./a[3])
+		let pre_pb_b = (24-1./b[3])/(1./b[3])
+		let dpra = a[4]<0.3?0.3:a[4]
+		dpra = dpra>0.7?0.7:dpra
+		let dprb = b[4]<0.3?0.3:b[4]
+		dprb = dprb>0.7?0.7:dprb
+		let irr_a = a[3]*(1-dpra)+a[3]*dpra*(1+a[3]*(1-dpra))/pre_pb_a
+		let irr_b = b[3]*(1-dprb)+b[3]*dprb*(1+b[3]*(1-dprb))/pre_pb_b
+		let pba = (a[3]*(25+10*(0.5-a[5]) - 1./irr_a))
+		let pbb = (b[3]*(25+10*(0.5-b[5]) - 1./irr_b))
+		return a[2]/pba - b[2]/pbb;   
 	});  
 	for (var i=0,len=varAllSort.length; i<len; i++)
 	{ 	
