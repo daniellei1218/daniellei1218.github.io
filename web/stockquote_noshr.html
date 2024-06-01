@@ -87,7 +87,7 @@ function box_html(item, code)
 function init()
 {
 	html = ''
-	varAllSort = varAll.slice().sort(function(a, b)
+	/*let varAllSort = varAll.slice().sort(function(a, b)
 	{
 		let pre_pb_a = (24-1./a[3])/(1./a[3])
 		let pre_pb_b = (24-1./b[3])/(1./b[3])
@@ -100,7 +100,13 @@ function init()
 		let pba = (a[3]*(25+10*(0.5-a[5]) - 1./irr_a))
 		let pbb = (b[3]*(25+10*(0.5-b[5]) - 1./irr_b))
 		return a[2]/pba - b[2]/pbb;   
-	});  
+	});*/  
+	let varAllSort = varAll.slice().sort(function(a, b)
+	{
+		let va = a[7]
+		let vb = b[7]
+		return vb-va
+	});
 	for (var i=0,len=varAllSort.length; i<len; i++)
 	{ 	
 		var item = get_code_report(varAllSort[i],varAllSort[i][1])
