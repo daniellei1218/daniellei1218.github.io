@@ -45,6 +45,7 @@
 </style>
 <link rel="stylesheet" href="styles.css">  
 <script src="js/db.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/price.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body onload="init()">
     <header id="navbar">  
@@ -92,6 +93,13 @@
 function init()
 {
 	var code = getParameterByName('code')
+	var price = varPrice[code]
+	if (price)
+	{
+		document.getElementById('price').value = price
+		document.getElementById('code').value = code
+		return
+	}
 	for (var i=0,len=varAll.length; i<len; i++)
 	{ 
 		if (code == varAll[i][0])
