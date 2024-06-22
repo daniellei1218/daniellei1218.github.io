@@ -87,9 +87,16 @@ function box_html(item, code)
 
 function init()
 {
+	var sortType = getParameterByName('sort')
 	html = ''
 	varAllSort = varAll.slice().sort(function(a, b)
 	{
+		if(sortType==1)
+		{
+			let va = a[7]
+			let vb = b[7]
+			return vb-va
+		}
 		let pre_pb_a = (24-1./a[3])/(1./a[3])
 		let pre_pb_b = (24-1./b[3])/(1./b[3])
 		let dpra = a[4]<0.3?0.3:a[4]
