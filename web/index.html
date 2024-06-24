@@ -134,7 +134,7 @@ function get_code_report(item, price)
 	pe0 = N-1./irr
 	pb0 = pe0*roe
 	irr = roe*(1-vdpr)+roe*vdpr*(1+roe*(1-vdpr))/pb0
-	v = evalNE(roe,vdpr,dr)
+	v = evalNE_pe(roe,vdpr,dr)
 	irr = v[1]
 	pb0 = v[0]
 	pe0 = pb0/roe
