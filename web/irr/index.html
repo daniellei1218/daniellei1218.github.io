@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRR Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>IRR Calculator</h1>
+        <input type="number" id="cashFlowInput" placeholder="Add cash flow (e.g. -100)" />
+        <button onclick="addCashFlow()">Add</button>
+        <ul id="cashFlowsList"></ul>
+        <button onclick="calculateIRR()">Calculate IRR</button>
+        <h2>IRR: <span id="irrResult">...</span></h2>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
